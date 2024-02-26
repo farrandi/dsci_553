@@ -80,6 +80,7 @@ $$ f(\pi | Y) \propto Beta(a + y, b + n - y) $$
   - **Mean**: $\frac{a + y}{a + b + n}$
   - **Variance**: $\frac{(a + y)(b + n - y)}{(a + b + n)^2(a + b + n + 1)}$
   - **Mode**: $\frac{a + y - 1}{a + b + n - 2}$
+    - Mode is the value of $\pi$ that maximizes the posterior distribution/ peak (MAP/ Maximum A Posteriori)
 
 - Can also use `summarize_beta_binomial(a, b, n, y)` to summarize the posterior distribution
   - `a` and `b` are the parameters of the prior beta distribution
