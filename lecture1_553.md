@@ -45,11 +45,12 @@ $$\text{Posterier} \propto \text{Likelihood} \times \text{Prior}$$
   2. They can be **overly simplified models with incomplete measurements** (e.g., rainy day model).
   3. They can even incorporate **unobservable latent variables** (e.g., hypothetical tennis rankings).
 
-#### Monte Carlo Simulation
-
-- write stuff
-
 ### `Stan` and `rstan` Basics
+
+- `Stan` is a probabilistic programming language for Bayesian inference
+- `rstan` is an R interface to `Stan`
+
+<!-- TODO: write tutorial... -->
 
 #### General Steps for Bayesian Modeling
 
