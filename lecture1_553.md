@@ -49,8 +49,14 @@ $$\text{Posterier} \propto \text{Likelihood} \times \text{Prior}$$
 
 - `Stan` is a probabilistic programming language for Bayesian inference
 - `rstan` is an R interface to `Stan`
-
-<!-- TODO: write tutorial... -->
+- List of common distributions in stan:
+  - `bernoulli(theta)`
+  - `bernoulli_logit(alpha)`
+  - `binomial(n, theta)`
+  - `beta_binomial(n, alpha, beta)`
+  - `poisson(lambda)`
+  - `neg_binomial(alpha, beta)`
+  - `gamma_poisson(lambda, alpha)`
 
 #### General Steps for Bayesian Modeling
 
