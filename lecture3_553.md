@@ -30,7 +30,7 @@
   - **Binomial**: The likelihood function
     - $Y | \pi \sim Binomial(n, \pi) \text{ where } \pi \in [0,1]$
   - Bayesian thinking: $Y$ is a random variable (population parameters are no longer fixed)
-  - **Beta**: Prior distribution
+  - **Beta**: Prior distribution of **parameter of interest** $\pi$
     - $\pi \sim Beta(a, b)$
 
 ### Beta Distribution (The Prior)

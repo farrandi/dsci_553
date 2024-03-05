@@ -10,14 +10,16 @@ $$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
 
 ## Bayes' Theorem
 
-- **Prior**: $P(A)$
-  - $P(A^c) = 1 - P(A)$
-- **Conditional Probability**: $P(B|A)$ and $P(B|A^c)$
-  - Likelihood: $\ell(A|B) = P(B|A)$
-    - Means likelihood of $A$ given $B$
-- **Posterior** (what we want to find): $P(A|B)$
+Let $\theta$ be a parameter of interest and $Y$ be the observed data.
 
-$$P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{P(A)P(B|A)}{P(A)P(B|A) + P(A^c)P(B|A^c)}$$
+- **Prior**: $P(\theta)$
+  - $P(\theta^c) = 1 - P(\theta)$
+- **Likelihood** of the data given the parameter:
+  - $\ell(\theta|Y) = P(Y|\theta)$
+- **Posterior** (what we want to find): $P(\theta|Y)$
+
+$$P(\theta|Y) = \frac{P(Y|\theta)P(\theta)}{P(Y)}$$
+
 $$\text{posterior} = \frac{\text{prior} \times \text{likelihood}}{\text{normalization constant}}$$
 
 $$\text{posterior} \propto \text{prior} \times \text{likelihood}$$
