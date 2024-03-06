@@ -2,6 +2,8 @@
 
 ## Bayesian Normal Linear Regression
 
+- Comparable to OLS
+
 ### Example 1: `bikeshare` data
 
 - This data is from `bayesrules` package in R.
