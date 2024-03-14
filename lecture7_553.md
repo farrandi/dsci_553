@@ -36,7 +36,9 @@ $$
 ## Hierarchical Bayesian Model
 
 - **Hierarchical Bayesian Model**: A model that estimates a parameter for each group of data, but also estimates a distribution of parameters for all the groups
-
+- **Key feature**: Nesting of parameters over multiple levels
+  - Common to have a variable in the model prior is itself a random variable (needs another prior)
+    - Or a variable in the likelihood is itself a random variable (needs another prior)
   - e.g. have a dataset of multiple rocket types and their launchs, and want to estimate the probability of a rocket launch succeeding
     - Have a $\pi_i$ for each rocket type
     - Also have random variables $\pi_i \sim \text{Beta}(a, b)$
