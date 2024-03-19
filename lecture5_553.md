@@ -21,7 +21,7 @@ For OLS would use Poisson regression since output is count data.
 
 For Bayesian, we need to specify **priors** for the coefficients and the variance.
 
-$$Y_i = \beta_0 + \beta_1X_{i1} + \beta_2X_{i2}\sigma^2 + \epsilon_i$$
+$$Y_i \sim \mathcal{N}(\beta_0 + \beta_1X_{i1} + \beta_2X_{i2}, \sigma^2)$$
 
 where
 
@@ -40,7 +40,7 @@ where
 ```r
 {r bikerides_stan}
 
-bikerides_stan <- "data {
+data {
   int<lower=0> n;                               // training sample size
   vector[n] y;                                  // response vector
   vector[n] x_1;                                // regressor 1 vector
@@ -65,10 +65,13 @@ model {
 }
 generated quantities {
   real y_pred = normal_rng(beta_0 + beta_1 * pred_x_1 + beta_2 * pred_x_2, sigma);
-}"
+}
 ```
 
-((TODO: add important block from 1.5))
+- `generated quantities` creates a posterior predictive distribution `y_pred` which takes into account:
+  - **Posterior variablility** in the parameters (from joint posterior distribution of the parameters)
+  - **Sampling variability** in the data (Each prediction should deviate from its posterior prediction) so add random noise
+- It executes after obtaining the posterior samples for the parameters.
 
 Then, in R need a dictionary to pass into stan.
 
@@ -106,20 +109,16 @@ round(summary(posterior_bikeshare)$summary, 2)[-6, c("mean", "sd", "2.5%", "97.5
 - The 2.5% and 97.5% quantiles are the 95% credible intervals.
   - If the interval **contains 0**, then the coefficient is **not significant**.
   - If the interval is **large**, then the model is **not very certain** about the coefficient (i.e. model is not capturing the right systematic component).
-
-### Example 2: Tinder data
-
-- Recall $Posterior \propto Likelihood \times Prior$
-
-#### The Prior
-
-#### The Likelihood
-
-#### The Posterior
+- There is also 2.5% and 97.5% quantiles for the `y_pred` which is the **posterior predictive distribution** for a 95% prediction interval.
 
 ## Bayesian Hypothesis Testing
 
-- Using the Tinder example from before...
+- Using a Tinder example where we want to infer the prob of finding a partner if we use Tinder.
+  - $X_i \sim \text{Bernoulli}(\pi)$ for each person $i$
+    - $\pi$ is the probability of finding a partner
+  - Prior: $\pi \sim \text{Beta}(a, b)$
+  - Likelihood: $Y|\pi \sim \text{Binomial}(n, \pi)$
+  - Posterior: $\pi|y \sim \text{Beta}(a', b') = \text{Beta}(a+y, b+n-y)$
 
 ### One-Sided Hypothesis Testing
 
@@ -128,7 +127,7 @@ round(summary(posterior_bikeshare)$summary, 2)[-6, c("mean", "sd", "2.5%", "97.5
   - **Alternative Hypothesis**: $\pi > 0.15$ (associated with the claim)
 - In Bayesian, we use the _posterior_ and **get probability for each hypothesis** (unlike frequentist).
 - Use `pbeta` function to get the probability
-  - If posterior $Beta(a'=24, b'=192)$ = $f(\pi | y=20)$
+  - If posterior $Beta(a'=24, b'=192)$ from likelihood of 20 successes out of 200 trials
   - Then $H_0: P(\pi \leq 0.15 | y=20) = \int_0^{0.15} f(\pi | y=20) d\pi$
   - equal to `pbeta(0.15, 24, 192)`
     </br>
@@ -137,7 +136,7 @@ round(summary(posterior_bikeshare)$summary, 2)[-6, c("mean", "sd", "2.5%", "97.5
   - $P(H_a | y=20) = P(\pi > 0.15 | y=20) = 0.043$
 - Can get **Posterior Odds** that $\pi > 0.15$ by dividing the two probabilities.
 
-$$\frac{P(H_a | y=20)}{P(H_0 | y=20)} = \frac{0.043}{0.957} = 0.045$$
+$$\text{Posterior Odds} = \frac{P(H_a | y=20)}{P(H_0 | y=20)} = \frac{0.043}{0.957} = 0.045$$
 
 - **Interpretation**: $\pi$ is 22 times($\frac{1}{0.045}$) more likely to be less than or equal to 0.15 compared to being greater than 0.15 using our **posterior model**.
 
@@ -151,7 +150,13 @@ $$\text{Bayes Factor} = \frac{\text{Posterior Odds}}{\text{Prior Odds}}$$
 
 - Bayes Factor = 1: Plausibility of $H_a$ stays the same even after new data
 - Bayes Factor > 1: Plausibility of $H_a$ increases after new data
-- Bayes Factor < 1: Plausibility of $H_a$ decreases after new data
+- Bayes Factor <br 1: Plausibility of $H_a$ decreases after new data
+
+</br>
+
+- If from MCMC, we cannot get analytical solution for Bayes Factor since no exact PDF to integrate.
+- Can use `bayesfactor` package in R to get Bayes Factor.
+  - **Solution:** Empirical cumulative distribution function (ECDF) of the posterior samples to approximate the posterior distribution. Use `ecdf` function in R.
 
 ### Two-Sided Hypothesis Testing
 
