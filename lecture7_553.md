@@ -3,10 +3,9 @@
 ## Complete Pooled Model
 
 - **Complete Pooled Model**: A model that pools all the data together and estimates a single parameter for all the data
+- e.g. have a dataset of multiple rocket types and their launchs, and want to estimate the probability of a rocket launch succeeding
 
-  - e.g. have a dataset of multiple rocket types and their launchs, and want to estimate the probability of a rocket launch succeeding
-
-    - Only 1 $\pi$ for all the rocket types
+  - Only 1 $\pi$ for all the rocket types
 
 $$
 \text{likelihood:} \qquad X_i|\pi \sim \text{Binomial}(n_i, \pi) \quad \text{for } i = 1, \dots, 367\\
@@ -18,8 +17,8 @@ $$
 ## Non-pooled Model
 
 - **Non-pooled Model**: A model that estimates a parameter for each group of data
-  - e.g. have a dataset of multiple rocket types and their launchs, and want to estimate the probability of a rocket launch succeeding
-    - Have a $\pi_i$ for each rocket type
+- e.g. have a dataset of multiple rocket types and their launchs, and want to estimate the probability of a rocket launch succeeding
+  - Have a $\pi_i$ for each rocket type
 
 $$
 \text{likelihood:} \qquad X_i|\pi_i \sim \text{Binomial}(n_i, \pi_i) \quad \text{for } i = 1, \dots, 367\\
@@ -39,11 +38,11 @@ $$
 - **Key feature**: Nesting of parameters over multiple levels
   - Common to have a variable in the model prior is itself a random variable (needs another prior)
     - Or a variable in the likelihood is itself a random variable (needs another prior)
-  - e.g. have a dataset of multiple rocket types and their launchs, and want to estimate the probability of a rocket launch succeeding
-    - Have a $\pi_i$ for each rocket type
-    - Also have random variables $\pi_i \sim \text{Beta}(a, b)$
-      - $a$ and $b$ are parameters and no longer hyperparameters
-      - new hyperparameters are the priors for $a$ and $b$
+- e.g. have a dataset of multiple rocket types and their launchs, and want to estimate the probability of a rocket launch succeeding
+  - Have a $\pi_i$ for each rocket type
+  - Also have random variables $\pi_i \sim \text{Beta}(a, b)$
+    - $a$ and $b$ are parameters and no longer hyperparameters
+    - new hyperparameters are the priors for $a$ and $b$
 
 $$
 \text{likelihood:} \qquad X_i|\pi_i \sim \text{Binomial}(n_i, \pi_i) \quad \text{for } i = 1, \dots, 367\\
@@ -51,6 +50,18 @@ $$
 \quad a \sim \text{Gamma}(0.001, 0.001) \\
 \qquad b \sim \text{Gamma}(0.001, 0.001).
 $$
+
+- e.g2 dataset of number of freethrows made and attempts by a Basketball player for multiple seasons
+
+  - Good because can predict free throw percentage for a new season
+  - Have a $n_i$ as number of attempts that season and $\pi_i$ is free throw percentage for that season
+
+  $$
+  \text{likelihood:} \qquad X_i|\pi_i \sim \text{Binomial}(n_i, \pi_i) \quad \text{where i=season number}\\
+  \text{prior:} \qquad \pi_i \sim \text{Beta}(a,b) \\
+  \quad a \sim \text{Gamma}(0.001, 0.001) \\
+  \qquad b \sim \text{Gamma}(0.001, 0.001).
+  $$
 
 - Basically **combines the best** of of the complete pooled model and the non-pooled model:
   - Use valuable info from all groups to infer the success probability of a specific group
