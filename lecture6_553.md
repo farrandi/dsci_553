@@ -99,6 +99,6 @@ posterior_climate <- stan(
 
 - A big advantage of Bayesian: did not need to derive any Maximum Likelihood steps
 - Meaning of Bayesian coefficients:
-  - e.g. estimate of $\beta_1$ is 0.009, 95% credible interval is (0.005, 0.0134)
+  - e.g. estimate of $\beta_1$ is 0.009, 95% credible interval is (0.005, 0.0134), since 0 is not in the posterior credible interval:
   - For each unit increase in income, a subject is 1.009 times more likely to believe in climate change
   - There is a 95% posterior probability that the true value of $\beta_1$ lies between 0.005 and 0.0134
