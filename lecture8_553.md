@@ -72,6 +72,8 @@ essplot <- mcmc_neff(eff_sample_size, size = 2)
 ### Autocorrelation Plots
 
 - MCMC is not entirely independent, so we need to check the autocorrelation of the chain
+- Want to see the autocorrelation drop to 0 quickly => shows semi-independence
+  - Ideally before lag 5
 
 ```r
 library(bayesplot)
